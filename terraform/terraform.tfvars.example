@@ -1,0 +1,5 @@
+project_id   = "your-gcp-project-id"
+region       = "us-central1"
+environment  = "prod"
+datastore_id = "sentinel-sre-runbooks-ds"
+sql_tier     = "db-custom-2-7680"

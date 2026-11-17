@@ -1,0 +1,103 @@
+{
+  "evals": [
+    {
+      "eval_id": "checkout_canary_anomaly_hitl_pause",
+      "initial_session": {
+        "app_name": "sentinel_sre_agent",
+        "user_id": "sre_oncall_1",
+        "state": {}
+      },
+      "conversation": [
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Investigate checkout-api in us-central1: canary 5xx error spike and p99 latency surge."
+              }
+            ]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [
+              {
+                "text": "Observed Impact: checkout-api (us-central1) on v2.5.0-rc1 has p99 latency 1840.5ms and error rate 14.2% (Runbook RB-104). Remediation paused at Human-in-the-Loop gate awaiting operator approval to roll back to v2.4.2."
+              }
+            ]
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "name": "query_service_golden_signals_telemetry",
+                "args": {
+                  "service_id": "checkout-api",
+                  "region": "us-central1"
+                }
+              },
+              {
+                "name": "search_verified_sre_runbooks",
+                "args": {
+                  "symptom_query": "Investigate checkout-api in us-central1: canary 5xx error spike and p99 latency surge."
+                }
+              },
+              {
+                "name": "execute_canary_rollback_with_approval",
+                "args": {
+                  "service_id": "checkout-api",
+                  "region": "us-central1",
+                  "faulty_version": "v2.5.0-rc1",
+                  "rollback_to_version": "v2.4.2"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "payments_ledger_healthy_check",
+      "initial_session": {
+        "app_name": "sentinel_sre_agent",
+        "user_id": "sre_oncall_2",
+        "state": {}
+      },
+      "conversation": [
+        {
+          "user_content": {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Check payments-ledger health in us-central1 for any latency or 5xx error spike."
+              }
+            ]
+          },
+          "final_response": {
+            "role": "model",
+            "parts": [
+              {
+                "text": "Observed Impact & Severity: Service 'payments-ledger' (us-central1) is healthy on release v4.1.0 (p99 latency 95.2ms, error rate 0.08%). No rollback required."
+              }
+            ]
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "name": "query_service_golden_signals_telemetry",
+                "args": {
+                  "service_id": "payments-ledger",
+                  "region": "us-central1"
+                }
+              },
+              {
+                "name": "search_verified_sre_runbooks",
+                "args": {
+                  "symptom_query": "Check payments-ledger health in us-central1 for any latency or 5xx error spike."
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
